@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin | Old West Barbería</title>
+    <meta
+      name="description"
+      content="Panel interno para gestionar barberos, horarios, servicios y citas en Old West Barbería."
+    />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#0f0b08" />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700&family=Rye&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="site-header">
+        <div class="nav-wrap">
+          <a class="brand-link" href="index.html">
+            <span class="brand-logo">
+              <img src="assets/logo-principal-clean.png" alt="Old West Barbería" />
+            </span>
+            <span class="brand-text">
+              <span class="brand-name">Old West Barbería</span>
+              <span class="brand-tag">Admin</span>
+            </span>
+          </a>
+          <div class="admin-actions">
+            <button class="btn btn--ghost btn--small js-logout" type="button">Cerrar sesión</button>
+          </div>
+        </div>
+      </header>
+
+      <main id="main">
+        <section class="hero section--tight">
+          <div class="container">
+            <p class="eyebrow">Gestión</p>
+            <h1>Panel de administración</h1>
+            <p class="lead">Todo el control en un solo lugar, sin código.</p>
+          </div>
+        </section>
+
+        <section class="section section--tight">
+          <div class="container">
+            <div class="surface js-login-panel">
+              <p class="eyebrow">Acceso</p>
+              <h2>Inicia sesión</h2>
+              <form class="form js-login-form">
+                <div class="field">
+                  <label for="admin-user">Usuario</label>
+                  <input id="admin-user" name="username" type="text" autocomplete="username" required />
+                </div>
+                <div class="field">
+                  <label for="admin-pass">Contraseña</label>
+                  <input id="admin-pass" name="password" type="password" autocomplete="current-password" required />
+                </div>
+                <div class="form__actions">
+                  <button class="btn btn--primary" type="submit">Ingresar</button>
+                  <span class="form-note js-login-error"></span>
+                </div>
+                <p class="form-note">
+                  Abre este panel desde <strong>http://localhost:3000/admin</strong> con el servidor activo.
+                </p>
+              </form>
+            </div>
+
+            <div class="js-admin-panel" hidden>
+              <div class="admin-accordion">
+                <details class="accordion">
+                  <summary>Dashboard</summary>
+                  <div class="accordion__body">
+                    <div class="surface">
+                      <div class="grid grid-4 js-metrics"></div>
+                    </div>
+                  </div>
+                </details>
+
+                <details class="accordion">
+                  <summary>Equipo · Barberos</summary>
+                  <div class="accordion__body">
+                    <div class="surface">
+                      <p class="eyebrow">Equipo</p>
+                      <h2>Barberos</h2>
+                      <form class="form js-barber-form">
+                        <input type="hidden" name="id" />
+                        <div class="grid grid-2">
+                          <div class="field">
+                            <label>Nombre</label>
+                            <input name="nombre" type="text" autocomplete="name" required />
+                          </div>
+                          <div class="field">
+                            <label>Foto</label>
+                            <input name="imagen" type="file" accept="image/*" />
+                          </div>
+                          <div class="field">
+                            <label>Descripción</label>
+                            <textarea name="descripcion" rows="4" placeholder="Especialidad, estilo o perfil del barbero"></textarea>
+                          </div>
+                          <div class="field">
+                            <label>Activo</label>
+                            <select name="activo">
+                              <option value="1">Sí</option>
+                              <option value="0">No</option>
+                            </select>
+                          </div>
+                          <div class="field field--full">
+                            <label>Asignación de servicios</label>
+                            <div class="service-assignment js-barber-services"></div>
+                            <p class="form-note">Selecciona solo los servicios que este barbero puede realizar.</p>
+                          </div>
+                          <div class="field">
+                            <label>Acción</label>
+                            <button class="btn btn--ghost js-barber-clear" type="button">Limpiar</button>
+                          </div>
+                        </div>
+                        <div class="form__actions">
+                          <button class="btn btn--primary" type="submit">Guardar barbero</button>
+                        </div>
+                      </form>
+                      <div class="divider"></div>
+                      <div class="js-barber-list admin-scroll-area admin-scroll-area--barbers"></div>
+                    </div>
+                  </div>
+                </details>
+
+                <details class="accordion">
+                  <summary>Horarios · Agenda semanal</summary>
+                  <div class="accordion__body">
+                    <div class="surface">
+                      <p class="eyebrow">Horarios</p>
+                      <h2>Agenda semanal</h2>
+                      <div class="grid grid-3">
+                        <div class="field">
+                          <label>Barbero</label>
+                          <select class="js-horario-barbero"></select>
+                        </div>
+                        <div class="field">
+                          <label>Acción</label>
+                          <button class="btn btn--ghost js-save-horarios" type="button">Guardar horarios</button>
+                        </div>
+                      </div>
+                      <div class="divider"></div>
+                      <div class="admin-scroll-area admin-scroll-area--schedule">
+                        <div class="js-horario-table"></div>
+                      </div>
+                    </div>
+                  </div>
+                </details>
+
+                <details class="accordion">
+                  <summary>Agenda · Calendario</summary>
+                  <div class="accordion__body">
+                    <div class="surface">
+                      <p class="eyebrow">Calendario</p>
+                      <h2>Agenda visual</h2>
+                      <div class="grid grid-3">
+                        <div class="field">
+                          <label for="calendar-barber">Barbero</label>
+                          <select id="calendar-barber" class="js-calendar-barber"></select>
+                        </div>
+                        <div class="field">
+                          <label for="calendar-date">Fecha</label>
+                          <input id="calendar-date" type="date" class="js-calendar-date" />
+                        </div>
+                        <div class="field">
+                          <label>Acción</label>
+                          <button class="btn btn--ghost js-calendar-refresh" type="button">Actualizar</button>
+                        </div>
+                      </div>
+                      <div class="divider"></div>
+                      <div class="calendar js-calendar-grid"></div>
+                      <p class="form-note">Arrastra una cita a otra hora para reprogramar.</p>
+                    </div>
+                  </div>
+                </details>
+
+                <details class="accordion">
+                  <summary>Servicios · Catálogo</summary>
+                  <div class="accordion__body">
+                    <div class="surface">
+                      <p class="eyebrow">Servicios</p>
+                      <h2>Catálogo editable</h2>
+                      <form class="form js-service-form">
+                        <input type="hidden" name="id" />
+                        <div class="grid grid-3">
+                          <div class="field">
+                            <label>Nombre</label>
+                            <input name="nombre" type="text" autocomplete="off" required />
+                          </div>
+                          <div class="field">
+                            <label>Categoría</label>
+                            <input name="categoria" type="text" placeholder="Cabello, Barba, Combo" />
+                          </div>
+                          <div class="field">
+                            <label>Descripción</label>
+                            <input name="descripcion" type="text" placeholder="Breve detalle del servicio" />
+                          </div>
+                          <div class="field">
+                            <label>Duración (min)</label>
+                            <input name="duracion_min" type="number" required />
+                          </div>
+                          <div class="field">
+                            <label>Precio</label>
+                            <input name="precio" type="number" />
+                          </div>
+                          <div class="field">
+                            <label>Activo</label>
+                            <select name="activo">
+                              <option value="1">Sí</option>
+                              <option value="0">No</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form__actions">
+                          <button class="btn btn--primary" type="submit">Guardar servicio</button>
+                          <button class="btn btn--ghost js-service-clear" type="button">Limpiar</button>
+                        </div>
+                      </form>
+                      <div class="divider"></div>
+                      <div class="js-service-list"></div>
+                    </div>
+                  </div>
+                </details>
+
+                
+                <details class="accordion">
+                  <summary>Edición de página</summary>
+                  <div class="accordion__body">
+                    <div class="surface">
+                      <p class="eyebrow">Edición</p>
+                      <h2>Contenido del sitio</h2>
+
+                      <details class="sub-accordion">
+                        <summary>Galería</summary>
+                        <div class="sub-accordion__body">
+                          <form class="form js-gallery-form">
+                            <div class="grid grid-3">
+                              <div class="field">
+                                <label>Título</label>
+                                <input name="titulo" type="text" placeholder="Ej.: corte clásico" required />
+                              </div>
+                              <div class="field">
+                                <label>Descripción</label>
+                                <input name="descripcion" type="text" placeholder="Detalle breve de la foto" required />
+                              </div>
+                              <div class="field">
+                                <label>Imagen</label>
+                                <input name="imagen" type="file" accept="image/*" />
+                              </div>
+                            </div>
+                            <div class="form__actions">
+                              <button class="btn btn--primary js-gallery-submit" type="submit">Agregar imagen</button>
+                            </div>
+                          </form>
+                          <div class="divider"></div>
+                          <div class="js-gallery-list"></div>
+                        </div>
+                      </details>
+
+                      <details class="sub-accordion">
+                        <summary>Reseñas</summary>
+                        <div class="sub-accordion__body">
+                          <form class="form js-review-form">
+                            <div class="grid grid-3">
+                              <div class="field">
+                                <label>Nombre</label>
+                                  <input name="nombre" type="text" placeholder="Nombre del cliente" autocomplete="name" required />
+                              </div>
+                              <div class="field">
+                                <label>Calificación</label>
+                                <select name="calificacion" required>
+                                  <option value="5">5 estrellas</option>
+                                  <option value="4">4 estrellas</option>
+                                  <option value="3">3 estrellas</option>
+                                  <option value="2">2 estrellas</option>
+                                  <option value="1">1 estrella</option>
+                                </select>
+                              </div>
+                                <div class="field">
+                                  <label>Fuente</label>
+                                  <input name="fuente" type="text" placeholder="Google Maps / Instagram" />
+                                </div>
+                              <div class="field">
+                                <label>Mensaje</label>
+                                <input name="mensaje" type="text" placeholder="Texto del testimonio" required />
+                              </div>
+                            </div>
+                            <div class="form__actions">
+                              <button class="btn btn--primary" type="submit">Agregar reseña</button>
+                            </div>
+                          </form>
+                          <div class="divider"></div>
+                          <div class="js-review-list"></div>
+                        </div>
+                      </details>
+
+                      <details class="sub-accordion">
+                        <summary>Experiencia</summary>
+                        <div class="sub-accordion__body">
+                          <form class="form js-experience-form">
+                            <div class="grid grid-3">
+                              <div class="field">
+                                <label>Sección</label>
+                                <select name="seccion">
+                                  <option value="historia">Historia</option>
+                                  <option value="filosofia">Filosofía</option>
+                                  <option value="manifiesto">Manifiesto</option>
+                                  <option value="diferenciadores">Diferenciadores</option>
+                                </select>
+                              </div>
+                              <div class="field">
+                                <label>Título</label>
+                                <input name="titulo" type="text" placeholder="Título de la sección" required />
+                              </div>
+                              <div class="field">
+                                <label>Descripción</label>
+                                <input name="descripcion" type="text" placeholder="Texto corto de la sección" required />
+                              </div>
+                            </div>
+                            <div class="form__actions">
+                              <button class="btn btn--primary" type="submit">Guardar cambios</button>
+                            </div>
+                          </form>
+                          <div class="divider"></div>
+                          <div class="js-experience-list"></div>
+                        </div>
+                      </details>
+                    </div>
+                  </div>
+                </details>
+
+<details class="accordion">
+                  <summary>Bloqueos · Horarios</summary>
+                  <div class="accordion__body">
+                    <div class="surface">
+                      <p class="eyebrow">Bloqueos</p>
+                      <h2>Bloquear horario</h2>
+                      <form class="form js-block-form">
+                        <div class="grid grid-4">
+                          <div class="field">
+                            <label>Barbero</label>
+                            <select class="js-block-barber" name="barbero_id"></select>
+                          </div>
+                          <div class="field">
+                            <label>Fecha</label>
+                            <input name="fecha" type="date" required />
+                          </div>
+                          <div class="field">
+                            <label>Hora inicial</label>
+                            <input name="hora" type="time" required />
+                          </div>
+                          <div class="field">
+                            <label>Hora final</label>
+                            <input name="hora_fin" type="time" />
+                          </div>
+                        </div>
+                        <div class="grid grid-3">
+                          <div class="field">
+                            <label>Aplicar</label>
+                            <select name="modo" class="js-block-mode">
+                              <option value="single">Solo esta fecha</option>
+                              <option value="weekday">Día de la semana</option>
+                              <option value="workweek">Lunes a viernes</option>
+                              <option value="daily">Todos los días</option>
+                            </select>
+                          </div>
+                          <div class="field js-block-weekday" hidden>
+                            <label>Día</label>
+                            <select name="weekday">
+                              <option value="1">Lunes</option>
+                              <option value="2">Martes</option>
+                              <option value="3">Miércoles</option>
+                              <option value="4">Jueves</option>
+                              <option value="5">Viernes</option>
+                              <option value="6">Sábado</option>
+                              <option value="0">Domingo</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="field">
+                          <label>Motivo</label>
+                          <input name="motivo" type="text" placeholder="Almuerzo, vacaciones..." />
+                        </div>
+                        <p class="form-note js-block-status"></p>
+                        <div class="form__actions">
+                          <button class="btn btn--primary" type="submit">Guardar bloqueo</button>
+                        </div>
+                      </form>
+                      <div class="divider"></div>
+                      <p class="form-note">Desde cada bloqueo puedes eliminar solo esa franja o borrar el patron completo: semana, lunes a viernes, todos los dias o todas las semanas.</p>
+                      <div class="js-block-list"></div>
+                    </div>
+                  </div>
+                </details>
+
+                <details class="accordion">
+                  <summary>Citas · Notas · Confirmaciones</summary>
+                  <div class="accordion__body">
+                    <div class="surface">
+                      <p class="eyebrow">Gestión de citas</p>
+                      <h2>Próximas citas y seguimiento</h2>
+                      <p class="form-note">Selecciona una cita de la lista para cargar su detalle, notas internas y acciones de confirmación.</p>
+                      <div class="js-upcoming"></div>
+                      <div class="divider"></div>
+                      <div class="grid grid-2">
+                        <div class="card">
+                          <h3 class="js-note-title">Selecciona una cita</h3>
+                          <p class="js-note-info form-note"></p>
+                          <div class="field">
+                            <label>Notas internas</label>
+                            <textarea class="js-note-text" rows="4" placeholder="Preferencias, observaciones..."></textarea>
+                          </div>
+                          <div class="form__actions">
+                            <button class="btn btn--primary js-note-save" type="button">Guardar nota</button>
+                            <button class="btn btn--ghost js-note-cancel" type="button">Cancelar cita</button>
+                            <button class="btn btn--ghost js-note-confirm" type="button">Confirmar cita</button>
+                          </div>
+                        </div>
+                        <div class="card">
+                          <p class="eyebrow">Confirmación</p>
+                          <h3>WhatsApp rápido</h3>
+                          <p class="form-note">Envío de mensaje con un clic para confirmar o recordar la cita.</p>
+                          <button class="btn btn--primary js-send-whatsapp" type="button">Enviar WhatsApp</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </details>
+
+                <details class="accordion">
+                  <summary>Clientes · Historial</summary>
+                  <div class="accordion__body">
+                    <div class="surface">
+                      <p class="eyebrow">Clientes</p>
+                      <h2>Historial por contacto</h2>
+                      <div class="form__row">
+                        <div class="field">
+                          <label>Teléfono</label>
+                          <input class="js-client-contact" type="tel" placeholder="+57..." inputmode="tel" />
+                        </div>
+                        <div class="field">
+                          <label>Acción</label>
+                          <button class="btn btn--ghost js-client-search" type="button">Buscar historial</button>
+                        </div>
+                      </div>
+                      <div class="divider"></div>
+                      <div class="js-client-history"></div>
+                    </div>
+                  </div>
+                </details>
+
+                <details class="accordion">
+                  <summary>Exportar · Excel</summary>
+                  <div class="accordion__body">
+                    <div class="surface">
+                      <p class="eyebrow">Exportar</p>
+                      <h2>Descargar reporte de citas</h2>
+                      <p class="form-note">Genera reportes compatibles con Excel por mes o por año, con cliente, servicio, barbero, estado, precio y notas.</p>
+                      <div class="grid grid-2">
+                        <div class="card">
+                          <p class="eyebrow">Mensual</p>
+                          <h3>Base del mes</h3>
+                          <div class="grid grid-2">
+                            <div class="field">
+                              <label>Mes</label>
+                              <select class="js-export-month"></select>
+                            </div>
+                            <div class="field">
+                              <label>Año</label>
+                              <select class="js-export-year"></select>
+                            </div>
+                          </div>
+                          <div class="form__actions">
+                            <button class="btn btn--ghost js-export-monthly" type="button">Exportar mes en Excel</button>
+                          </div>
+                        </div>
+                        <div class="card">
+                          <p class="eyebrow">Anual</p>
+                          <h3>Base del año</h3>
+                          <div class="field">
+                            <label>Año</label>
+                            <select class="js-export-year-annual"></select>
+                          </div>
+                          <div class="form__actions">
+                            <button class="btn btn--ghost js-export-annual" type="button">Exportar año en Excel</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </details>
+
+                <details class="accordion">
+                  <summary>Cancelaciones</summary>
+                  <div class="accordion__body">
+                    <div class="surface">
+                      <p class="eyebrow">Cancelaciones</p>
+                      <h2>Citas canceladas</h2>
+                      <div class="js-canceladas"></div>
+                    </div>
+                  </div>
+                </details>
+
+                <details class="accordion">
+                  <summary>Usuarios · Roles</summary>
+                  <div class="accordion__body">
+                    <div class="surface">
+                      <p class="eyebrow">Usuarios</p>
+                      <h2>Roles y accesos</h2>
+                      <form class="form js-user-form">
+                        <input type="hidden" name="id" />
+                        <div class="grid grid-3">
+                          <div class="field">
+                            <label>Usuario</label>
+                            <input name="username" type="text" autocomplete="username" required />
+                          </div>
+                          <div class="field">
+                            <label>Contraseña</label>
+                            <input name="password" type="password" autocomplete="new-password" placeholder="Solo si quieres cambiar" />
+                          </div>
+                          <div class="field">
+                            <label>Rol</label>
+                            <select name="role">
+                              <option value="admin">Admin</option>
+                              <option value="recepcion">Recepcion</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form__actions">
+                          <button class="btn btn--primary" type="submit">Guardar usuario</button>
+                          <button class="btn btn--ghost js-user-clear" type="button">Limpiar</button>
+                        </div>
+                      </form>
+                      <div class="divider"></div>
+                      <div class="js-user-list"></div>
+                    </div>
+                  </div>
+                </details>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script src="admin.js" defer></script>
+  </body>
+</html>

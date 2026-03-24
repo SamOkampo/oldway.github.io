@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agendamiento | Old West Barbería</title>
+    <meta
+      name="description"
+      content="Agenda tu cita en Old West Barbería. Formulario premium con disponibilidad por barbero en tiempo real."
+    />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content="Agendamiento | Old West Barbería" />
+    <meta
+      property="og:description"
+      content="Reserva tu corte y barba con disponibilidad real y confirmación directa."
+    />
+    <meta property="og:image" content="assets/logo-principal-clean.png" />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#0f0b08" />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700&family=Rye&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Saltar al contenido</a>
+    <div class="page">
+      <header class="site-header">
+        <div class="nav-wrap">
+          <a class="brand-link" href="index.html">
+            <span class="brand-logo">
+              <img src="assets/logo-principal-clean.png" alt="Old West Barbería" decoding="async" />
+            </span>
+            <span class="brand-text">
+              <span class="brand-name">Old West Barbería</span>
+              <span class="brand-tag">Viejo Oeste</span>
+            </span>
+          </a>
+          <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+          <nav class="nav" id="nav-menu">
+            <a href="index.html">Inicio</a>
+            <a href="servicios.html">Servicios</a>
+            <a href="experiencia.html">Experiencia</a>
+            <a href="ubicacion.html">Ubicación</a>
+            <a href="agendamiento.html" class="is-active" aria-current="page">Agendamiento</a>
+            <a href="contacto.html">Contacto</a>
+            <a class="btn btn--primary btn--small nav__cta" href="agendamiento.html">Reservar cita</a>
+          </nav>
+        </div>
+      </header>
+
+      <main id="main">
+        <section class="hero section--tight hero--compact">
+          <div class="container">
+            <p class="eyebrow">Agendamiento</p>
+            <h1>Reserva tu cita</h1>
+            <p class="lead">Selecciona barbero, servicio y fecha. Solo verás horas disponibles.</p>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="container split">
+            <form class="form js-booking-form">
+              <div class="field">
+                <label for="booking-name">Nombre</label>
+                <input
+                  id="booking-name"
+                  name="cliente_nombre"
+                  type="text"
+                  placeholder="Tu nombre"
+                  autocomplete="name"
+                  required
+                />
+              </div>
+              <div class="field">
+                <label for="booking-contact">WhatsApp / teléfono</label>
+                <input
+                  id="booking-contact"
+                  name="cliente_contacto"
+                  type="tel"
+                  placeholder="Tu número"
+                  autocomplete="tel"
+                  inputmode="tel"
+                  required
+                />
+              </div>
+              <div class="field">
+                <label for="booking-barbero">Barbero</label>
+                <select id="booking-barbero" name="barbero_id" required></select>
+                <p class="form-note js-booking-barber-note"></p>
+              </div>
+              <div class="field">
+                <label for="booking-servicio">Servicio</label>
+                <select id="booking-servicio" name="servicio_id" required></select>
+                <p class="form-note js-booking-service-note">Solo verás servicios disponibles para el barbero seleccionado.</p>
+              </div>
+              <div class="booking-calendar">
+                <div class="calendar-nav">
+                  <button class="btn btn--ghost btn--small js-cal-prev" type="button">← Semana</button>
+                  <div class="calendar-range js-cal-range">Semana</div>
+                  <button class="btn btn--ghost btn--small js-cal-next" type="button">Semana →</button>
+                </div>
+                <div class="calendar-days js-cal-days"></div>
+              </div>
+              <div class="booking-slots">
+                <div class="slots-head">
+                  <p class="eyebrow">Horas disponibles</p>
+                  <p class="form-note js-slot-status">Selecciona una fecha para ver horas.</p>
+                </div>
+                <div class="slots-grid js-slot-grid"></div>
+                <p class="form-note js-booking-selection"></p>
+              </div>
+              <input type="hidden" name="fecha" class="js-booking-date" required />
+              <input type="hidden" name="hora" class="js-booking-time" required />
+              <div class="field">
+                <label for="booking-notas">Notas</label>
+                <textarea
+                  id="booking-notas"
+                  name="notas"
+                  rows="3"
+                  placeholder="Detalles o preferencias"
+                ></textarea>
+              </div>
+              <div class="form__actions">
+                <button class="btn btn--primary" type="submit">Confirmar cita</button>
+                <span class="form-note js-booking-status"></span>
+              </div>
+            </form>
+            <div>
+              <p class="eyebrow">Detalles</p>
+              <h2>Atención personalizada</h2>
+              <p class="lead">Horario sugerido: 9:00 a 19:00. Confirmación rápida.</p>
+              <ul class="list">
+                <li>Selecciona tu barbero favorito.</li>
+                <li>Las horas ocupadas se bloquean automáticamente.</li>
+                <li>Si no hay horas, prueba otra fecha.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <div class="footer__grid">
+          <div>
+            <div class="brand-name">Old West Barbería</div>
+            <div class="brand-tag">Viejo Oeste</div>
+          </div>
+          <div class="footer__links">
+            <a href="https://www.instagram.com/oldwestbarberia" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <a href="https://www.facebook.com/viejooeste1987" target="_blank" rel="noopener noreferrer">Facebook</a>
+            <a href="https://wa.me/573229091440" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script src="script.js" defer></script>
+  </body>
+</html>
+
